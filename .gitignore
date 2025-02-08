@@ -2,9 +2,6 @@
 # Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
 ################################################################################
 
-/Lab1/Lab1_code/.vs
-/Lab1/Lab1_code/Lab1_code/.vs
-/Lab1/Lab1_code/Lab1_code/Debug
-/Lab1/Lab1_code/Lab1_code/Lab1_code/Debug
-/Lab1/Lab1_code/Lab1_code/x64/Debug
-/Lab1/Lab1_code/x64/Debug
+.vs
+Debug
+x64/Debug
