@@ -12,20 +12,6 @@ using namespace std;
 class BaseRemover
 {
 public:
-    void printFile(string path) {
-        string line;
-
-        ifstream file(path);
-
-        if (!file.is_open()) {
-            cout << "Ошибка: не удалось открыть файл!" << endl;
-            return;
-        }
-
-        while (getline(file, line)) {
-            cout << line << endl;
-        }
-        file.close();
-    }
+    void printFile(string path);
 };
 

@@ -128,7 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseRemover.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NumsRemover.cpp" />
+    <ClCompile Include="WordRemover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseRemover.h" />
