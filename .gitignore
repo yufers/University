@@ -5,3 +5,5 @@
 .vs
 Debug
 x64-Debug
+OOP/Lab8/build/.ninja_deps
+build
