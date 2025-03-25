@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "type": "cmake",
+      "request": "launch",
+      "name": "Debug portfile(s)",
+      "cmakeDebugType": "external",
+      "pipeName": "\\\\.\\pipe\\vcpkg_ext_portfile_dbg",
+      "preLaunchTask": "Debug vcpkg commands"
+    },
+    {
+      "name": "Launch Program",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Lab9.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "console": "externalTerminal"
+    }
+  ]
+}
