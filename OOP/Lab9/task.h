@@ -8,6 +8,8 @@
 #include <windows.h>
 #include <chrono>
 #include <cstdint>
+#include <filesystem>
+#include <fstream>
 
 class Task
 {
@@ -75,6 +77,12 @@ public:
     TaskExecuter(TaskList *taskList) : taskList(taskList) {}
 
     Task *takeTask();
+    void addFile(std::string filename, std::filesystem::path filePath);
+    void deleteFile(std::string filename, std::filesystem::path filePath);
+    void renameFile(std::string filename, std::filesystem::path filePath);
+    void printFile(std::string filename, std::filesystem::path filePath);
+    void addDataFile(std::string filename, std::filesystem::path filePath, std::string Id);
+    void removeDataFile(std::string filename, std::filesystem::path filePath);
     virtual void operator()();
 };
 

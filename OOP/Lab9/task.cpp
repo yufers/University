@@ -4,6 +4,8 @@
 #include <queue>
 #include <random>
 #include <windows.h>
+#include <filesystem>
+#include <fstream>
 
 #include "task.h"
 
@@ -38,10 +40,10 @@ Task *TaskGenerator::generateTask()
         break;
     }
 
-    std::uniform_int_distribution<int> distrib2(2, 10);
+    std::uniform_int_distribution<int> distrib2(2, 7);
     int num2 = distrib2(gen);
 
-    unsigned long long id = timeSinceEpochMillisec();
+    unsigned long long id = timeSinceEpochMillisec() / 1000 / 15;
 
     Task *task = new Task(type, num2, std::to_string(id));
     (*taskList).addTask(task);
@@ -94,24 +96,112 @@ Task *TaskExecuter::takeTask()
     return task;
 }
 
+void TaskExecuter::addFile(std::string filename, std::filesystem::path filePath)
+{
+    std::ofstream file(filePath);
+    if (file)
+    {
+        std::cout << "Created file: " << filename << std::endl;
+    }
+}
+
+void TaskExecuter::deleteFile(std::string filename, std::filesystem::path filePath)
+{
+    if (std::filesystem::exists(filePath))
+    {
+        std::filesystem::remove(filePath);
+        std::cout << "Deleted file: " << filename << std::endl;
+    }
+}
+
+void TaskExecuter::renameFile(std::string filename, std::filesystem::path filePath)
+{
+    if (std::filesystem::exists(filePath)) {
+        std::string newFilename = "..\\tasks\\renamed_" + filename;
+        std::filesystem::rename(filePath, newFilename);
+        std::cout << "Renamed file to: " << newFilename << std::endl;
+    }
+}
+
+void TaskExecuter::printFile(std::string filename, std::filesystem::path filePath)
+{
+    std::ifstream file(filePath);
+
+    if (file)
+    {
+        std::cout << "Contents of " << filename << ":\n";
+        std::string line;
+        while (std::getline(file, line))
+        {
+            std::cout << line << std::endl;
+        }
+    }
+}
+
+void TaskExecuter::addDataFile(std::string filename, std::filesystem::path filePath, std::string Id)
+{
+    std::ofstream file(filePath, std::ios::app);
+    if (file)
+    {
+        file << "Random data " << Id << "\n";
+        std::cout << "Added data to file: " << filename << std::endl;
+    }
+}
+
+void TaskExecuter::removeDataFile(std::string filename, std::filesystem::path filePath)
+{
+    std::ofstream file(filePath, std::ios::trunc);
+    if (file)
+    {
+        std::cout << "Cleared contents of file: " << filename << std::endl;
+    }
+}
+
 void TaskExecuter::operator()()
 {
-    while (1)
+    while (true)
     {
-
         Task *task = takeTask();
 
         if (task != nullptr)
         {
-            std::this_thread::sleep_for(static_cast<std::chrono::seconds>(task->getTime()));
+            std::cout << "Before executing task: " << std::endl;
+            std::string filename = "file_" + task->getId() + ".txt";
+            std::filesystem::path filePath = std::filesystem::current_path() / ".." /"tasks" / filename;
 
-            std::cout << "finished: " << *task << std::endl;
+            std::string type = task->getType();
+
+            if (type == "add_file")
+            {
+                addFile(filename, filePath);
+            }
+            else if (type == "delete_file")
+            {
+                deleteFile(filename, filePath);
+            }
+            else if (type == "rename_file")
+            {
+                renameFile(filename, filePath);
+            }
+            else if (type == "print_file")
+            {
+                printFile(filename, filePath);
+            }
+            else if (type == "add_data_file")
+            {
+                std::string Id = task->getId();
+                addDataFile(filename, filePath, Id);
+            }
+            else
+            {
+                removeDataFile(filename, filePath);
+            }
 
             delete task;
         }
         else
         {
-            std::this_thread::sleep_for(static_cast<std::chrono::seconds>(1));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
 }

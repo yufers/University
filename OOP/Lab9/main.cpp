@@ -16,17 +16,13 @@ int main()
     std::thread te1(executer1);
     std::this_thread::sleep_for(static_cast<std::chrono::seconds>(1));
     std::thread tg2(generator2);
-    std::thread te2(executer2);
     std::this_thread::sleep_for(static_cast<std::chrono::seconds>(1));
     std::thread tg3(generator3);
-    std::thread te3(executer3);
 
     tg1.join();
     te1.join();
     tg2.join();
-    te2.join();
     tg3.join();
-    te3.join();
 
     std::cout << "finish";
     system("pause");
