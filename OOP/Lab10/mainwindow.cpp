@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsScene *scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-    QMovie *movie = new QMovie("D:/University.code/OOP/Lab10/sticker.gif");
+    QMovie *movie = new QMovie("../../sticker.tmp");
 
     if (!movie->isValid()) {
         qDebug() << "Ошибка загрузки GIF!";
